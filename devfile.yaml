@@ -38,7 +38,7 @@ commands:
   - id: install-aws-cli
     exec:
       commandLine: 'pip3 install awscli --upgrade'
-      component: runtime
+      component: universal-developer-image
 events:
   postStart:
     - install-aws-cli
