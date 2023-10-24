@@ -1,0 +1,44 @@
+schemaVersion: 2.2.0
+metadata:
+  name: empty-ktp8
+  namespace: balki404-dev
+attributes:
+  controller.devfile.io/devworkspace-config:
+    name: devworkspace-config
+    namespace: crw
+  controller.devfile.io/scc: container-build
+  controller.devfile.io/storage-type: per-user
+  dw.metadata.annotations:
+    che.eclipse.org/devfile-source: |
+      url:
+        location: >-
+          https://devspaces.apps.sandbox-m3.1530.p1.openshiftapps.com/dashboard/devfile-registry/devfiles/empty.yaml
+      factory:
+        params: >-
+          storageType=per-user&url=https://devspaces.apps.sandbox-m3.1530.p1.openshiftapps.com/dashboard/devfile-registry/devfiles/empty.yaml
+components:
+  - container:
+      env:
+        - name: CHE_DASHBOARD_URL
+          value: https://devspaces.apps.sandbox-m3.1530.p1.openshiftapps.com
+        - name: CHE_PLUGIN_REGISTRY_URL
+          value: https://devspaces.apps.sandbox-m3.1530.p1.openshiftapps.com/plugin-registry/v3
+        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
+          value: http://plugin-registry.crw.svc:8080/v3
+        - name: CLUSTER_CONSOLE_URL
+          value: https://console-openshift-console.apps.sandbox-m3.1530.p1.openshiftapps.com
+        - name: CLUSTER_CONSOLE_TITLE
+          value: OpenShift console
+        - name: OPENVSX_REGISTRY_URL
+          value: https://open-vsx.org
+      image: registry.redhat.io/devspaces/udi-rhel8@sha256:15e62bd71b7edd6afbf01d536d9839af649b87c17c1bfcbbd3102f90d470c097
+      sourceMapping: /projects
+    name: universal-developer-image
+commands:
+  - id: install-aws-cli
+    exec:
+      commandLine: 'pip3 install awscli --upgrade'
+      component: runtime
+events:
+  postStart:
+    - install-aws-cli
